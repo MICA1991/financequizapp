@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Connection Test</title>
+</head>
+<body>
+    <h1>API Connection Test</h1>
+    <button onclick="testHealth()">Test Health Endpoint</button>
+    <button onclick="testAdminLogin()">Test Admin Login</button>
+    <div id="results"></div>
+
+    <script>
+        async function testHealth() {
+            try {
+                const response = await fetch('http://localhost:5000/health');
+                const data = await response.json();
+                document.getElementById('results').innerHTML = '<h3>Health Test:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('results').innerHTML = '<h3>Health Test Error:</h3><pre>' + error.message + '</pre>';
+            }
+        }
+
+        async function testAdminLogin() {
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'admin123'
+                    })
+                });
+                const data = await response.json();
+                document.getElementById('results').innerHTML = '<h3>Admin Login Test:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('results').innerHTML = '<h3>Admin Login Test Error:</h3><pre>' + error.message + '</pre>';
+            }
+        }
+    </script>
+</body>
+</html> 
