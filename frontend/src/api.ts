@@ -39,7 +39,7 @@ export interface QuizSubmission {
 // Azure AD Authentication
 export const azureAdLogin = async (accessToken: string, account: any): Promise<LoginResponse> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/azure/login`, {
+    const response = await fetch(`${API_BASE_URL}/api/auth/azure/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const azureAdLogin = async (accessToken: string, account: any): Promise<L
 
 export const validateAzureAdToken = async (accessToken: string, userInfo: any): Promise<LoginResponse> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/azure/validate`, {
+    const response = await fetch(`${API_BASE_URL}/api/auth/azure/validate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
