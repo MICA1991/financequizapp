@@ -1067,6 +1067,11 @@ const App: React.FC = () => {
   // Utility to fetch student history from backend
   async function fetchStudentHistory(token: string) {
     try {
+      if (!token) {
+        alert("You are not logged in. Please log in again.");
+        // Optionally redirect to login
+        return [];
+      }
       const response = await fetch(`${API_BASE_URL}/api/quiz/history`, {
         method: 'GET',
         headers: {
@@ -1074,6 +1079,12 @@ const App: React.FC = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
+      if (response.status === 401) {
+        alert("Session expired or unauthorized. Please log in again.");
+        localStorage.removeItem('userToken');
+        window.location.reload();
+        return [];
+      }
       const data = await response.json();
       if (data.success && data.data && Array.isArray(data.data.sessions)) {
         return data.data.sessions;
