@@ -1015,6 +1015,20 @@ const App: React.FC = () => {
           },
           body: JSON.stringify({ level }),
         });
+        if (response.status === 401) {
+          // Try to parse error message
+          let data = { message: '' };
+          try { data = await response.json(); } catch {}
+          if (data.message && data.message.toLowerCase().includes('token expired')) {
+            alert('Your session has expired. Please log in again.');
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('userData');
+            localStorage.removeItem('sessionId');
+            localStorage.removeItem('attemptedLevels');
+            window.location.reload();
+            return;
+          }
+        }
         const data = await response.json();
         console.log('[FRONTEND] /session/start response:', data);
         if (data.success) {
