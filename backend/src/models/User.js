@@ -102,13 +102,13 @@ const userSchema = new mongoose.Schema({
 });
 
 // Indexes for better query performance
-userSchema.index({ username: 1 });
-userSchema.index({ mobileNumber: 1 });
-userSchema.index({ studentId: 1 });
-userSchema.index({ email: 1 });
-userSchema.index({ role: 1 });
-userSchema.index({ azureAdId: 1 });
-userSchema.index({ azureAdEmail: 1 });
+//userSchema.index({ username: 1 });
+//userSchema.index({ mobileNumber: 1 });
+//userSchema.index({ studentId: 1 });
+//userSchema.index({ email: 1 });
+//userSchema.index({ role: 1 });
+//userSchema.index({ azureAdId: 1 });
+//userSchema.index({ azureAdEmail: 1 });
 
 // Pre-save middleware to hash password (only for non-Azure AD users)
 userSchema.pre('save', async function(next) {
