@@ -1,5 +1,5 @@
 // API service for backend communication
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export interface AzureAdUser {
   azureAdId: string;
@@ -157,7 +157,7 @@ export const getStudentDetails = async (studentId: string, token: string): Promi
 // Utility function to check if backend is available
 export const checkBackendHealth = async (): Promise<boolean> => {
   try {
-    const response = await fetch('http://localhost:5000/health', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL.replace(/\/api$/, '')}/health`, {
       method: 'GET',
     });
     return response.ok;
