@@ -5,20 +5,22 @@ dotenv.config();
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+      ssl: true,
+      tlsAllowInvalidCertificates: false,
+      serverSelectionTimeoutMS: 10000, // Optional but recommended for Cosmos
+    });
 
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ Connected to CosmosDB Mongo at ${conn.connection.host}`);
 
-    // Handle connection events
     mongoose.connection.on('error', (err) => {
       console.error('❌ MongoDB connection error:', err);
     });
 
     mongoose.connection.on('disconnected', () => {
-      console.log('⚠️ MongoDB disconnected');
+      console.warn('⚠️ MongoDB disconnected');
     });
 
-    // Graceful shutdown
     process.on('SIGINT', async () => {
       await mongoose.connection.close();
       console.log('🔌 MongoDB connection closed through app termination');
