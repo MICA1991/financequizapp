@@ -1,5 +1,5 @@
 // API service for backend communication
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+export const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export interface AzureAdUser {
   azureAdId: string;

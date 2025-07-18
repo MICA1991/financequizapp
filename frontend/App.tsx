@@ -5,7 +5,7 @@ import { CheckCircleIcon, XCircleIcon, LightBulbIcon, SparklesIcon, TrophyIcon }
 import { MsalProvider, useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { PublicClientApplication, InteractionStatus } from '@azure/msal-browser';
 import { msalConfig } from './src/authConfig';
-import { azureAdLogin, checkBackendHealth, saveToLocalStorage, getFromLocalStorage, getAllStudentAttempts } from './src/api';
+import { azureAdLogin, checkBackendHealth, saveToLocalStorage, getFromLocalStorage, getAllStudentAttempts, API_BASE_URL } from './src/api';
 import axios from 'axios';
 
 // Gemini API key: Vite exposes env vars as import.meta.env.VITE_GEMINI_API_KEY
@@ -1007,7 +1007,7 @@ const App: React.FC = () => {
     if (userToken) {
       try {
         console.log('[FRONTEND] Starting session with token:', userToken, 'payload:', { level });
-        const response = await fetch('import.meta.env.VITE_API_URL/quiz/session/start', {
+        const response = await fetch(`${API_BASE_URL}/api/quiz/session/start`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -1053,7 +1053,7 @@ const App: React.FC = () => {
   // Utility to fetch student history from backend
   async function fetchStudentHistory(token: string) {
     try {
-      const response = await fetch('import.meta.env.VITE_API_URL/quiz/history', {
+      const response = await fetch(`${API_BASE_URL}/api/quiz/history`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -1193,7 +1193,7 @@ const App: React.FC = () => {
           selectedCategories,
           timeSpent: 0
         });
-        const response = await fetch('import.meta.env.VITE_API_URL/quiz/session/answer', {
+        const response = await fetch(`${API_BASE_URL}/api/quiz/session/answer`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -1253,7 +1253,7 @@ const App: React.FC = () => {
     }
     try {
       console.log('[FRONTEND] handleSubmitFeedback: sessionId', sessionId, 'userToken', userToken);
-      const response = await fetch('import.meta.env.VITE_API_URL/quiz/session/complete', {
+      const response = await fetch(`${API_BASE_URL}/api/quiz/session/complete`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
